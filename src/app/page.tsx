@@ -102,10 +102,11 @@ export default function HomePage() {
           </p>
           
           <p>
-            I'm deeply curious about <span className="about-highlight">Artificial Intelligence</span> and its potential. 
-            I constantly explore topics in <span className="about-highlight">machine learning</span>, 
-            <span className="about-highlight"> deep learning</span>, and aim to create real-world solutions using AI.
-          </p>
+          I&#39;m deeply curious about <span className="about-highlight">Artificial Intelligence</span> and its potential. 
+  I constantly explore topics in <span className="about-highlight">machine learning</span>, 
+  <span className="about-highlight"> deep learning</span>, and aim to create real-world solutions using AI.
+</p>
+
         </div>
       </motion.div>
 

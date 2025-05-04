@@ -1,22 +1,22 @@
-// server/socketServer.js
-const http = require('http');
-const socketIo = require('socket.io');
+// server/socketServer.ts
+import http from 'http';
+import { Server as SocketIOServer } from 'socket.io';
 
 const server = http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
   res.end('Socket.io server running');
 });
 
-const io = socketIo(server);
+const io = new SocketIOServer(server);
 
 io.on('connection', (socket) => {
   console.log('A user connected');
-  
+
   socket.on('message', (msg) => {
     console.log('Message received:', msg);
-    io.emit('message', msg); // Broadcast message to all clients
+    io.emit('message', msg);
   });
-  
+
   socket.on('disconnect', () => {
     console.log('A user disconnected');
   });
