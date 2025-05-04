@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import clsx from 'clsx';
@@ -14,32 +14,19 @@ export default function TicTacToePage() {
   const [mode, setMode] = useState<'AI' | '2P' | null>(null);
   const [winner, setWinner] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (mode === 'AI' && !winner && !isXNext && board.includes(null)) {
-      const timeoutId = setTimeout(() => {
-        aiMove();
-      }, 500);
-      return () => clearTimeout(timeoutId);
+  const checkWinner = useCallback((board: CellValue[]) => {
+    const lines = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6],
+    ];
+    for (const [a, b, c] of lines) {
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) return board[a];
     }
-  }, [isXNext, mode, winner, board]);
+    return null;
+  }, []);
 
-  const handleClick = (index: number) => {
-    if (board[index] || winner || (mode === 'AI' && !isXNext)) return;
-    const newBoard = [...board];
-    newBoard[index] = isXNext ? 'X' : 'O';
-    setBoard(newBoard);
-
-    const win = checkWinner(newBoard);
-    if (win) {
-      setWinner(win);
-    } else if (!newBoard.includes(null)) {
-      setWinner('Draw');
-    } else {
-      setIsXNext(!isXNext);
-    }
-  };
-
-  const aiMove = () => {
+  const aiMove = useCallback(() => {
     const emptyIndices = board
       .map((v, i) => (v === null ? i : null))
       .filter((v) => v !== null) as number[];
@@ -58,18 +45,31 @@ export default function TicTacToePage() {
     } else {
       setIsXNext(true);
     }
-  };
+  }, [board, checkWinner]);
 
-  const checkWinner = (board: CellValue[]) => {
-    const lines = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8],
-      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-      [0, 4, 8], [2, 4, 6],
-    ];
-    for (let [a, b, c] of lines) {
-      if (board[a] && board[a] === board[b] && board[a] === board[c]) return board[a];
+  useEffect(() => {
+    if (mode === 'AI' && !winner && !isXNext && board.includes(null)) {
+      const timeoutId = setTimeout(() => {
+        aiMove();
+      }, 500);
+      return () => clearTimeout(timeoutId);
     }
-    return null;
+  }, [isXNext, mode, winner, board, aiMove]);
+
+  const handleClick = (index: number) => {
+    if (board[index] || winner || (mode === 'AI' && !isXNext)) return;
+    const newBoard = [...board];
+    newBoard[index] = isXNext ? 'X' : 'O';
+    setBoard(newBoard);
+
+    const win = checkWinner(newBoard);
+    if (win) {
+      setWinner(win);
+    } else if (!newBoard.includes(null)) {
+      setWinner('Draw');
+    } else {
+      setIsXNext(!isXNext);
+    }
   };
 
   const resetGame = () => {
@@ -147,10 +147,13 @@ export default function TicTacToePage() {
         <button onClick={resetGame} className="px-4 py-2 bg-yellow-500 rounded-lg hover:bg-yellow-600 transition">
           Restart
         </button>
-        <button onClick={() => {
-          setMode(null);
-          resetGame();
-        }} className="px-4 py-2 bg-red-500 rounded-lg hover:bg-red-600 transition">
+        <button
+          onClick={() => {
+            setMode(null);
+            resetGame();
+          }}
+          className="px-4 py-2 bg-red-500 rounded-lg hover:bg-red-600 transition"
+        >
           Back
         </button>
       </div>
