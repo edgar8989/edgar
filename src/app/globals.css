@@ -1,0 +1,64 @@
+@import 'animate.css';
+
+/* Tailwind base */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* General Style */
+html {
+  background-color: #111;
+  color: #fff;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: rgb(0, 0, 0);
+}
+
+a {
+  text-decoration: none;
+  color: rgb(168, 85, 247); /* purple-400 */
+}
+a:hover {
+  color: rgb(255, 255, 255);
+}
+
+/* Skill Styles */
+.skill-glow {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: #a78bfa;
+  transition: transform 0.3s ease;
+}
+.skill-glow:hover {
+  transform: scale(1.1);
+}
+
+/* About Text */
+.about-text {
+  font-family: 'Share Tech Mono', monospace;
+  color: #d1d5db;
+  line-height: 1.8;
+}
+.about-highlight {
+  color: #a78bfa;
+  font-weight: 600;
+}
+
+.mono-text {
+  font-family: 'Share Tech Mono', monospace;
+  color: #d1d5db;
+}
+/* Optional: Tambahan biar scroll chat smooth dan lebih bagus */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.7);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
