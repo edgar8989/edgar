@@ -21,7 +21,26 @@ const projects = [
     image: '/12345.png',
     link: '/tictactoe',
   },
+  {
+    title: 'Portfolio Website',
+    description: 'A personal portfolio site built with Next.js and Tailwind CSS.',
+    image: '/portfolio.png',
+    link: '/portfolio',
+  },
+  {
+    title: 'Weather App',
+    description: 'A weather forecast app using OpenWeatherMap API with a clean, responsive UI.',
+    image: '/weather.png',
+    link: '/weatherapp',
+  },
+  {
+    title: 'Notes App',
+    description: 'A modern notes app with markdown support and local storage sync.',
+    image: '/notes.png',
+    link: 'components/NoteApp',
+  },
 ];
+
 
 export default function ProjectsPage() {
   return (

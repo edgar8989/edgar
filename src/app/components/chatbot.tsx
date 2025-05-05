@@ -14,6 +14,8 @@ const responses: Record<string, string> = {
   contoh: "tunggu berapa menit lagi.....",
   test: "tunggu berapa menit lagi.....",
   buatkan: "tunggu berapa menit lagi.....",
+  apa: "tunggu berapa menit lagi.....",
+  itu: "tunggu berapa menit lagi.....",
 };
 
 const quickReplies = ['Hi', 'Help', 'Bye', 'Hello'];
