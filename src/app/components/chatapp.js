@@ -1,49 +1,41 @@
 'use client';
+
 import { useState } from 'react';
 
 const ChatApp = ({ messages, sendMessage, username }) => {
-  const [input, setInput] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleSend = () => {
-    if (input.trim()) {
-      sendMessage(input);
-      setInput('');
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      sendMessage(message);
+      setMessage('');
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-slate-800 text-white rounded-2xl shadow-xl p-4 flex flex-col h-[80vh]">
-      <div className="flex-1 overflow-y-auto space-y-2 mb-4 px-2 custom-scrollbar">
-        {messages.map((msg, index) => {
-          const isMe = msg.username === username;
-          return (
-            <div
-              key={index}
-              className={`max-w-[75%] px-4 py-2 rounded-xl ${
-                isMe
-                  ? 'bg-cyan-600 self-end rounded-br-none'
-                  : 'bg-gray-600 self-start rounded-bl-none'
-              }`}
-            >
-              <p className="text-sm font-semibold text-white/80">{msg.username}</p>
-              <p>{msg.text}</p>
+    <div className="chat-app-container">
+      <div className="messages-container space-y-4 py-4 px-2">
+        {messages.map((msg, index) => (
+          <div key={index} className="message-item flex items-start">
+            <div className="message-bubble bg-indigo-700 text-white p-4 rounded-lg max-w-[80%] ml-auto">
+              <strong className="text-lg">{msg.username}: </strong>
+              <span>{msg.text}</span>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
-
-      <div className="flex items-center gap-2">
+      <div className="input-container flex items-center gap-2 mt-4">
         <input
           type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
           placeholder="Type a message..."
-          className="flex-1 px-4 py-2 rounded-lg bg-slate-700 text-white outline-none focus:ring-2 focus:ring-cyan-500"
+          className="input-field px-4 py-2 w-full rounded-lg bg-gray-800 text-white text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
         />
         <button
-          onClick={handleSend}
-          className="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 rounded-lg font-semibold transition"
+          onClick={handleSendMessage}
+          className="send-button px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-500 transition-all duration-300 ease-in-out"
         >
           Send
         </button>

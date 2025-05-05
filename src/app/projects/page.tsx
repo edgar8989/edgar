@@ -7,7 +7,7 @@ const projects = [
     title: 'Chat Real Time Website',
     description: 'Real Time Chat.',
     image: '/33.png',
-    link: '/chatrl',
+    link: '/chatrl/',
   },
   {
     title: 'AI Chatbot',
