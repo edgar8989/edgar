@@ -7,6 +7,13 @@ const responses: Record<string, string> = {
   hello: "Hi there! Need any assistance?",
   bye: "Goodbye! Have a nice day!",
   help: "Sure! I can help you with basic questions.",
+  tolong: "tunggu berapa menit lagi.....",
+  jelaskan: "tunggu berapa menit lagi.....",
+  tulis: "tunggu berapa menit lagi.....",
+  buat: "tunggu berapa menit lagi.....",
+  contoh: "tunggu berapa menit lagi.....",
+  test: "tunggu berapa menit lagi.....",
+  buatkan: "tunggu berapa menit lagi.....",
 };
 
 const quickReplies = ['Hi', 'Help', 'Bye', 'Hello'];

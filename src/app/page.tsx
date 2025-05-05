@@ -133,8 +133,17 @@ export default function HomePage() {
         <h2 className="text-3xl text-blue-400 font-bold text-center mb-10">Experience</h2>
         <div className="max-w-3xl mx-auto text-left text-gray-300 space-y-10">
           {[
-            { title: 'Programmer — X Tech', date: 'Jan 2024 – Apr 2024', description: 'Developing software solutions using C++, optimizing algorithms and data structures, and collaborating with cross-functional teams for application development and maintenance.' },
-            { title: 'Freelance', date: '2023 – Present', description: 'Designed and deployed websites for clients with a focus on performance, SEO, and clean UI using modern stacks.' },
+            {
+              title: 'Freelance Academic',
+              date: '2024 – Present',
+              description: 'Provided academic support including content structuring, custom solutions, and subject-specific assistance (e.g., programming, math) to help clients meet educational goals efficiently.'
+            },
+            {
+              title: 'Digital Book Seller',
+              date: '2024 – Present',
+              description: 'Created and sold educational ebooks through online platforms, focusing on accessible content, and digital marketing strategies for academic audiences.'
+            }
+            
           ].map(({ title, date, description }, index) => (
             <motion.div
               key={title}
