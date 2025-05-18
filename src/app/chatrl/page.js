@@ -9,42 +9,42 @@ const ChatPage = () => {
   const [username, setUsername] = useState('');
   const [entered, setEntered] = useState(false);
 
-  // Fungsi untuk mengirim pesan
   const sendMessage = async (text) => {
     const messageData = {
       username,
       text,
     };
 
-    // Menyimpan pesan ke Supabase
     await supabase.from('messages').insert([messageData]);
-
-    // Optimistic UI update
     setMessages((prev) => [...prev, messageData]);
   };
 
   useEffect(() => {
     if (entered) {
-      // Langganan untuk pesan baru menggunakan channel
-      const channel = supabase.channel('chat_channel')
-        .on('INSERT', { schema: 'public', table: 'messages' }, (payload) => {
+      const channel = supabase
+        .channel('chat_channel')
+        .on('postgres_changes', {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'messages',
+        }, (payload) => {
           setMessages((prev) => [...prev, payload.new]);
         })
         .subscribe();
 
-      // Ambil pesan-pesan yang sudah ada
       const fetchMessages = async () => {
         const { data } = await supabase
           .from('messages')
           .select('*')
           .order('created_at', { ascending: false });
-        setMessages(data);
+
+        setMessages(data || []); // prevent null being set
       };
+
       fetchMessages();
 
-      // Bersihkan langganan saat komponen dibersihkan
       return () => {
-        supabase.removeChannel(channel);  // Unsubscribe dari real-time
+        supabase.removeChannel(channel);
       };
     }
   }, [entered]);

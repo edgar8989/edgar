@@ -16,7 +16,7 @@ const ChatApp = ({ messages, sendMessage, username }) => {
     <div className="chat-app flex flex-col justify-between h-full p-4 bg-gray-900 rounded-xl shadow-lg max-w-md mx-auto">
       {/* Messages Container */}
       <div className="messages flex-1 overflow-y-auto space-y-4">
-        {messages.map((msg, index) => (
+        {(Array.isArray(messages) ? messages : []).map((msg, index) => (
           <div
             key={index}
             className={`message p-3 rounded-xl max-w-xs ${
