@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -13,6 +14,7 @@ const ChatPage = () => {
     const messageData = {
       username,
       text,
+      created_at: new Date().toISOString(), // Pastikan kolom created_at ada
     };
 
     await supabase.from('messages').insert([messageData]);
@@ -20,37 +22,49 @@ const ChatPage = () => {
   };
 
   useEffect(() => {
-    if (entered) {
-      const channel = supabase
-        .channel('chat_channel')
-        .on('postgres_changes', {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'messages',
-        }, (payload) => {
-          setMessages((prev) => [...prev, payload.new]);
-        })
-        .subscribe();
-
-      const fetchMessages = async () => {
-        const { data } = await supabase
-          .from('messages')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        setMessages(data || []); // prevent null being set
-      };
-
-      fetchMessages();
-
-      return () => {
-        supabase.removeChannel(channel);
-      };
+    // Cek localStorage untuk username
+    const savedUsername = localStorage.getItem('username');
+    if (savedUsername) {
+      setUsername(savedUsername);
+      setEntered(true);
     }
+  }, []);
+
+  useEffect(() => {
+    if (!entered) return;
+
+    const fetchMessages = async () => {
+      const { data, error } = await supabase
+        .from('messages')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (!error) {
+        setMessages(data);
+      }
+    };
+
+    fetchMessages();
+
+    const channel = supabase
+      .channel('chat_channel')
+      .on('postgres_changes', {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'messages',
+      }, (payload) => {
+        setMessages((prev) => [...prev, payload.new]);
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [entered]);
 
   const handleJoinChat = () => {
     if (username.trim()) {
+      localStorage.setItem('username', username);
       setEntered(true);
     }
   };
