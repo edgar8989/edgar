@@ -4,6 +4,12 @@ import { motion } from 'framer-motion';
 
 const projects = [
   {
+    title: 'TicTacToe Game',
+    description: 'A TicTacToe game with a stylish UI using React, Tailwind CSS, and optional AI mode.',
+    image: '/12345.png',
+    link: '/tictactoe',
+  },
+  {
     title: 'Chat Real Time Website',
     description: 'Real Time Chat.',
     image: '/33.png',
@@ -15,12 +21,7 @@ const projects = [
     image: '/123456.png',
     link: '/chatbot',
   },
-  {
-    title: 'TicTacToe Game',
-    description: 'A TicTacToe game with a stylish UI using React, Tailwind CSS, and optional AI mode.',
-    image: '/12345.png',
-    link: '/tictactoe',
-  },
+  
  
 ];
 
